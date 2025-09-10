@@ -1,0 +1,27 @@
+@startuml
+
+!include <C4/C4_Container>
+
+Person(client, "Client", "Пользователь системы")
+Person(customerSupportTeam, "CustomerSupportTeam", "Команда по обслуживанию клиентов")
+System_Boundary(platform, "Умный дом") {
+    Container(clientFrontend, "Client web interface", "Client frontend")
+    Container(supportFrontend, "Support web interface", "Support Team frontend")
+    Container(apiGateway, "API Gateway", "API Gateway")
+    Container(deviceManagementService, "DeviceManagement", "Сервис управления устройствами")
+    Container(telemetry, "Telemetry", "Сервис телеметрии")
+    Container(userManagement, "User Management", "Сервис управления пользователями")
+    Container(automation, "Automation", "Сервис автоматизации")
+    Container(integrationHub, "Integration Hub", "Сервис интеграции с внешними системами")
+    Container(marketplace, "Marketplace", "Маркетплейс, каталог устройств")
+    System(microcontrollers, "Microcontrollers", "Устройства умного дома")
+}
+
+Rel(client, clientFrontend, "Управление и мониторинг\n умным домом", "HTTP")
+Rel(customerSupportTeam, supportFrontend, "Поддержка пользователей", "HTTP")
+Rel(clientFrontend, apiGateway, "HTTP")
+Rel(supportFrontend, apiGateway, "HTTP")
+Rel(apiGateway, deviceManagementService, "HTTP")
+Rel(deviceManagementService, microcontrollers, "Управление и мониторинг\n датчиков температуры", "HTTP")
+
+@enduml
