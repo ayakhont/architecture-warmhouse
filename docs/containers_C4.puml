@@ -16,6 +16,7 @@ System_Boundary(platform, "Умный дом") {
     Container(integrationHub, "Integration Hub Service", "Сервис интеграции с устройствами партнеров + DB")
     System(microcontrollers, "Microcontrollers/Modules", "Устройства умного дома")
 }
+Container_Ext(paymentService, "Payment Service", "API (External)", "Обработка запросов для операций оплаты")
 
 Rel(client, clientFrontend, "Управление и мониторинг\n умным домом", "HTTP")
 Rel(customerSupportTeam, supportFrontend, "Поддержка пользователей", "HTTP")
@@ -31,6 +32,7 @@ Rel(integrationHub, microcontrollers, "Управление конечными �
 Rel(telemetry, integrationHub, "Получение телеметрии с устройств", "HTTP")
 Rel(deviceManagementService, telemetry, "Изменение состояний устройств телеметрии", "HTTP")
 Rel(apiGateway, telemetry, "Получение телеметрии с устройств", "HTTP")
+Rel_R(marketplace, paymentService, "Инициирует оплату через API", "HTTP")
 
 
 

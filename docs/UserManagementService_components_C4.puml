@@ -2,14 +2,14 @@
 !include <C4/C4_Component>
 
 Container_Boundary(userManagement, "User Management Service") {
-    Component(userApi, "User API", "REST API", "Handles HTTP requests for user operations\nОбработка HTTP-запросов для операций с пользователями")
-    Component(userService, "User Service", "Go Service", "Business logic for user management\nБизнес-логика управления пользователями")
-    Component(userRepo, "User Repository", "SQL/Go", "Data access layer for users\nСлой доступа к данным пользователей")
-    Component(userDb, "User Database", "PostgreSQL", "Stores user data\nХранение данных пользователей")
+    Component(userApi, "User API", "REST API", "Обработка HTTP запросов для операций с пользователями")
+    Component(userService, "User Service", "Go Service", "Бизнес-логика управления пользователями")
+    Component(userDBService, "User DB service", "SQL/Go", "Слой доступа к данным пользователей")
+    ComponentDb(userDb, "User Database", "PostgreSQL", "Хранение данных пользователей")
 }
 
-Rel(userApi, userService, "Calls business logic\nВызов бизнес-логики", "Go func")
-Rel(userService, userRepo, "Reads/writes user data\nЧтение/запись данных", "Go func")
-Rel(userRepo, userDb, "SQL queries\nSQL-запросы", "SQL")
+Rel(userApi, userService, "Вызов бизнес-логики", "Go func")
+Rel(userService, userDBService, "Чтение/запись данных", "Go func")
+Rel(userDBService, userDb, "SQL запросы", "SQL")
 
 @enduml

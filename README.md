@@ -50,13 +50,16 @@
 
 **1. Диаграмма контейнеров (Containers)**
 
-*Все микросервисы(контейнеры с именем Service в начале) имеют собственную БД!*
+*Все микросервисы(контейнеры с именем Service) имеют собственную БД!*
+*Не стал рисовать, чтобы не перегружать диаграмму инфой на этом уровне C4*
 
 [диаграмма контейнеров в модели C4](docs/containers_C4.puml)
 
 **2. Диаграмма компонентов (Components)**
 
-Добавьте диаграмму для каждого из выделенных микросервисов.
+- [User Management Service](docs/UserManagementService_components_C4.puml)
+- [Marketplace Service](docs/MarketplaceService_components_C4.puml)
+- [Automation Service](docs/AutomationService_components_C4.puml)
 
 **Диаграмма кода (Code)**
 
