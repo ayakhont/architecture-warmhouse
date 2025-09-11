@@ -8,12 +8,12 @@ System_Boundary(platform, "Умный дом") {
     Container(clientFrontend, "Client web interface", "Client frontend")
     Container(supportFrontend, "Support web interface", "Support Team frontend")
     Container(apiGateway, "API Gateway", "API Gateway")
-    Container(deviceManagementService, "DeviceManagement", "Сервис управления устройствами")
     Container(telemetry, "Telemetry", "Сервис телеметрии")
     Container(userManagement, "User Management", "Сервис управления пользователями")
     Container(automation, "Automation", "Сервис автоматизации")
     Container(integrationHub, "Integration Hub", "Сервис интеграции с внешними системами")
     Container(marketplace, "Marketplace", "Маркетплейс, каталог устройств")
+    Container(deviceManagementService, "DeviceManagement", "Сервис управления устройствами")
     System(microcontrollers, "Microcontrollers", "Устройства умного дома")
 }
 
@@ -22,6 +22,17 @@ Rel(customerSupportTeam, supportFrontend, "Поддержка пользоват
 Rel(clientFrontend, apiGateway, "HTTP")
 Rel(supportFrontend, apiGateway, "HTTP")
 Rel(apiGateway, deviceManagementService, "HTTP")
-Rel(deviceManagementService, microcontrollers, "Управление и мониторинг\n датчиков температуры", "HTTP")
+Rel(apiGateway, automation, "HTTP")
+Rel(automation, deviceManagementService, "HTTP")
+Rel(apiGateway, marketplace, "HTTP")
+Rel(apiGateway, userManagement, "HTTP")
+Rel(deviceManagementService, integrationHub, "Управление и мониторинг\n датчиков температуры", "HTTP")
+Rel(integrationHub, microcontrollers, "Управление и мониторинг\n датчиков температуры", "MQTT")
+Rel(telemetry, integrationHub, "Управление и мониторинг\n датчиков температуры", "HTTP")
+Rel(deviceManagementService, telemetry, "Управление и мониторинг\n датчиков температуры", "HTTP")
+Rel(apiGateway, telemetry, "Управление и мониторинг\n датчиков температуры", "HTTP")
+
+
+
 
 @enduml
