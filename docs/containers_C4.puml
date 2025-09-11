@@ -8,12 +8,12 @@ System_Boundary(platform, "Умный дом") {
     Container(clientFrontend, "Client web interface", "Client frontend")
     Container(supportFrontend, "Support web interface", "Support Team frontend")
     Container(apiGateway, "API Gateway", "API Gateway")
-    Container(userManagement, "User Management", "Сервис управления пользователями")
-    Container(telemetry, "Telemetry", "Сервис телеметрии")
-    Container(automation, "Automation", "Сервис автоматизации")
-    Container(deviceManagementService, "DeviceManagement", "Сервис управления устройствами")
-    Container(marketplace, "Marketplace", "Маркет, каталог устройств")
-    Container(integrationHub, "Integration Hub", "Сервис интеграции с устройствами партнеров")
+    Container(userManagement, "User Management Service", "Сервис управления пользователями + DB")
+    Container(telemetry, "Telemetry Service", "Сервис телеметрии + DB")
+    Container(automation, "Automation Service", "Сервис автоматизации + DB")
+    Container(deviceManagementService, "DeviceManagement Service", "Сервис управления устройствами + DB")
+    Container(marketplace, "Marketplace Service", "Маркет сервис с каталогом устройств + DB")
+    Container(integrationHub, "Integration Hub Service", "Сервис интеграции с устройствами партнеров + DB")
     System(microcontrollers, "Microcontrollers/Modules", "Устройства умного дома")
 }
 
