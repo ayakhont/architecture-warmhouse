@@ -60,6 +60,8 @@
 - [User Management Service](docs/UserManagementService_components_C4.puml)
 - [Marketplace Service](docs/MarketplaceService_components_C4.puml)
 - [Automation Service](docs/AutomationService_components_C4.puml)
+- [Device Management Service](docs/DeviceManagementService_components_C4.puml)
+- [Telemetry Service](docs/TelemetryService_components_C4.puml)
 
 **Диаграмма кода (Code)**
 

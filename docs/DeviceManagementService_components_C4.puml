@@ -1,0 +1,20 @@
+@startuml
+!include <C4/C4_Component>
+
+Container_Boundary(dms, "Device Management Service") {
+    Component(deviceManagementApi, "Device Management API", "REST API", "Обработка HTTP запросов для операций с устройствами")
+    Component(deviceManagementService, "Device Management Service", "Go Service", "Бизнес-логика управления устройствами")
+    Component(deviceManagementDBService, "Device Management DB service", "SQL/Go", "Слой доступа к данным устройств")
+    ComponentDb(deviceManagementDb, "Device Management Database", "PostgreSQL", "Хранение данных устройств")
+}
+Component(telemetry, "Telemetry Service", "Сервис телеметрии")
+Component(integrationHub, "Integration Hub Service", "Сервис интеграции с устройствами партнеров")
+
+Rel(deviceManagementApi, deviceManagementService, "Вызов бизнес-логики", "Go func")
+Rel(deviceManagementService, deviceManagementDBService, "Чтение/запись данных", "Go func")
+Rel(deviceManagementDBService, deviceManagementDb, "SQL запросы", "SQL")
+Rel(deviceManagementService, telemetry, "Изменение состояний устройств телеметрии", "HTTP")
+Rel(deviceManagementService, integrationHub, "Управление устройствами", "HTTP")
+
+@enduml
+

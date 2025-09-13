@@ -1,7 +1,7 @@
 @startuml
 !include <C4/C4_Component>
 
-Container_Boundary(utomation, "Automation Service") {
+Container_Boundary(automation, "Automation Service") {
     Component(automationApi, "Automation API", "REST API", "Обработка HTTP запросов для операций со сценариями")
     Component(automationService, "Automation Service", "Go Service", "Бизнес-логика автоматизации событий и работы со сценариями")
     Component(automationDBService, "Automation DB service", "SQL/Go", "Слой доступа к данным автоматизации")
