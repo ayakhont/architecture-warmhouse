@@ -1,0 +1,41 @@
+@startuml
+
+class TelemetryAPI {
+    +receiveTelemetry()
+    +getDeviceStatus()
+    +subscribeEvents()
+}
+
+class TelemetryService {
+    +processTelemetry()
+    +handleEvent()
+    +sendMetrics()
+}
+
+class OpenTelemetryCollector {
+    +collectMetrics()
+    +aggregateMetrics()
+}
+
+class PrometheusService {
+    +storeMetrics()
+    +sendMetrics()
+}
+
+class TelemetryDBService {
+    +readEvents()
+    +writeEvents()
+}
+
+
+class IntegrationHubService {
+    +fetchTelemetry()
+}
+
+TelemetryAPI --> TelemetryService : calls
+TelemetryService --> TelemetryDBService : uses
+TelemetryService --> OpenTelemetryCollector : sends metrics
+TelemetryService --> IntegrationHubService : fetches telemetry
+OpenTelemetryCollector --> PrometheusService: exports metrics
+
+@enduml

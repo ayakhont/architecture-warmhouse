@@ -38,8 +38,9 @@ Rel(apiGateway, telemetry, "Получение телеметрии с устр�
 Rel_R(marketplace, paymentService, "Инициирует оплату через API", "HTTP")
 Rel(telemetry, prometheus, "Экспорт метрик", "HTTP")
 Rel(grafana, prometheus, "Запрос метрик для визуализации", "HTTP")
-Rel_R(deviceManagementService, mediaStreamingServer, "Запрос видеопотока с камер", "HTTP/RTSP/WebRTC")
 Rel_R(integrationHub, mediaStreamingServer, "Потоковое аудио и видео", "RTSP/WebRTC")
+Rel(apiGateway, mediaStreamingServer, "Запрос видеопотока с камер", "HTTP/gRPC/MQTT")
+
 
 
 

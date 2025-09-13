@@ -9,15 +9,12 @@ Container_Boundary(dms, "Device Management Service") {
 }
 Component(telemetry, "Telemetry Service", "Сервис телеметрии")
 Component(integrationHub, "Integration Hub Service", "Сервис интеграции с устройствами партнеров")
-Container_Ext(mediaStreamingServer, "Media Streaming Server", "RTSP/HTTP", "Сервер потокового видео")
 
 Rel(deviceManagementApi, deviceManagementService, "Вызов бизнес-логики", "Go func")
 Rel(deviceManagementService, deviceManagementDBService, "Чтение/запись данных", "Go func")
 Rel(deviceManagementDBService, deviceManagementDb, "SQL запросы", "SQL")
 Rel(deviceManagementService, telemetry, "Изменение состояний устройств телеметрии", "HTTP")
 Rel(deviceManagementService, integrationHub, "Управление устройствами", "HTTP")
-Rel_R(deviceManagementService, mediaStreamingServer, "Запрос видеопотока с камер", "HTTP/RTSP/WebRTC")
-
 
 @enduml
 
