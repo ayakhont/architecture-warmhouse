@@ -19,6 +19,7 @@ System_Boundary(platform, "Умный дом") {
     System(microcontrollers, "Microcontrollers/Modules", "Устройства умного дома")
 }
 Container_Ext(paymentService, "Payment Service", "API (External)", "Обработка запросов для операций оплаты")
+Container_Ext(mediaStreamingServer, "Media Streaming Server", "Сервер потокового аудио и видео", "Сервер потокового видео")
 
 Rel(client, clientFrontend, "Управление и мониторинг\n умным домом", "HTTP")
 Rel(customerSupportTeam, supportFrontend, "Поддержка пользователей", "HTTP")
@@ -37,6 +38,9 @@ Rel(apiGateway, telemetry, "Получение телеметрии с устр�
 Rel_R(marketplace, paymentService, "Инициирует оплату через API", "HTTP")
 Rel(telemetry, prometheus, "Экспорт метрик", "HTTP")
 Rel(grafana, prometheus, "Запрос метрик для визуализации", "HTTP")
+Rel_R(deviceManagementService, mediaStreamingServer, "Запрос видеопотока с камер", "HTTP/RTSP/WebRTC")
+Rel_R(integrationHub, mediaStreamingServer, "Потоковое аудио и видео", "RTSP/WebRTC")
+
 
 
 @enduml

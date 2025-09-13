@@ -62,6 +62,7 @@
 - [Automation Service](docs/AutomationService_components_C4.puml)
 - [Device Management Service](docs/DeviceManagementService_components_C4.puml)
 - [Telemetry Service](docs/TelemetryService_components_C4.puml)
+- [Integration Hub Service](docs/IntegrationHubService_components_C4.puml)
 
 **Диаграмма кода (Code)**
 
