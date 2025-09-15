@@ -8,44 +8,50 @@ entity "User" as user {
 
 entity "House" as house {
   *id : int
+  user_id : int
   --
   address : string
-  user_id : int
 }
 
 entity "Device" as device {
   *id : int
   type_id : int
-  house_id : int
+  module_id : int
   --
   name : string
   serial_number: string
-  firmware_version: string
+  status: string
 }
 
 entity "DeviceType" as devicetype {
   *id : int
-  name : string
+  --
+  type : string
   description : string
 }
 
 entity "Module" as module {
   *id : int
-  device_id : int
+  house_id : int
+  --
   name : string
-  version : string
+  firmware_version: string
 }
 
 entity "Telemetry" as telemetry {
   *id : int
-  device_id : int
+  module_id : int
+  --
+  metric: string
   timestamp : datetime
   value : float
 }
 
 entity "Payment" as payment {
   *id : int
+  item_id : int
   user_id : int
+  --
   amount : float
   status : string
   created_at : datetime
@@ -53,6 +59,7 @@ entity "Payment" as payment {
 
 entity "MarketplaceItem" as item {
   *id : int
+  --
   name : string
   price : float
   description : string
@@ -61,15 +68,16 @@ entity "MarketplaceItem" as item {
 entity "AutomationScenario" as scenario {
   *id : int
   user_id : int
+  --
   name : string
-  config : text
+  config : json
 }
 
 user ||--o{ house : owns
-house ||--o{ device : contains
+house ||--o{ module : contains
+module ||--o{ telemetry : generates
+module ||--o{ device : contains
 devicetype ||--o{ device : classifies
-device ||--o{ module : has
-device ||--o{ telemetry : sends
 user ||--o{ payment : makes
 user ||--o{ scenario : configures
 item ||--o{ payment : purchased_by
