@@ -11,19 +11,18 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - ./smart_home/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - postgres-data:/var/lib/postgresql/data
-      - ../smart_home/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - smarthome-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres -d smarthome" ]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       retries: 5
       start_period: 30s
       timeout: 10s
 
   temperature-api:
-  ## тут нужно добавить приложение
     build:
       context: ./temperature_api
       dockerfile: Dockerfile

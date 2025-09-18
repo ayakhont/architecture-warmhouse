@@ -11,4 +11,4 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Определяем команду для запуска приложения
-CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8081", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "temperature-api", "--port", "8081", "--reload"]
