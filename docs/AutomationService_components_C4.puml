@@ -1,0 +1,18 @@
+@startuml
+!include <C4/C4_Component>
+
+Container_Boundary(automation, "Automation Service") {
+    Component(automationApi, "Automation API", "REST API", "Обработка HTTP запросов для операций со сценариями")
+    Component(automationService, "Automation Service", "Go Service", "Бизнес-логика автоматизации событий и работы со сценариями")
+    Component(automationDBService, "Automation DB service", "SQL/Go", "Слой доступа к данным автоматизации")
+    ComponentDb(automationDb, "Automation Database", "PostgreSQL", "Хранение данных сенариев и событий")
+}
+Component(deviceManagementService, "DeviceManagement Service", "Сервис управления устройствами")
+
+Rel(automationApi, automationService, "Вызов бизнес-логики", "Go func")
+Rel(automationService, automationDBService, "Чтение/запись данных", "Go func")
+Rel(automationDBService, automationDb, "SQL запросы", "SQL")
+Rel_R(automationService, deviceManagementService, "Изменение состояний устройств по событиям", "HTTP")
+
+@enduml
+

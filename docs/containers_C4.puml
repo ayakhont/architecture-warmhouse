@@ -1,0 +1,47 @@
+@startuml
+
+!include <C4/C4_Container>
+
+Person(client, "Client", "Пользователь системы")
+Person(customerSupportTeam, "CustomerSupportTeam", "Команда по обслуживанию клиентов")
+System_Boundary(platform, "Умный дом") {
+    Container(clientFrontend, "Client web interface", "Client frontend")
+    Container(supportFrontend, "Support web interface", "Support Team frontend")
+    Container(apiGateway, "API Gateway", "API Gateway")
+    Container(userManagement, "User Management Service", "Сервис управления пользователями + DB")
+    Container(telemetry, "Telemetry Service", "Сервис телеметрии + DB")
+    Container(prometheus, "Prometheus", "Система мониторинга и оповещений + Prometheus TSDB", "Сбор и хранение метрик")
+    Container(grafana, "Grafana", "Платформа аналитики и визуализации", "Визуализация метрик и создание дашбордов")
+    Container(automation, "Automation Service", "Сервис автоматизации + DB")
+    Container(deviceManagementService, "DeviceManagement Service", "Сервис управления устройствами + DB")
+    Container(marketplace, "Marketplace Service", "Маркет сервис с каталогом устройств + DB")
+    Container(integrationHub, "Integration Hub Service", "Сервис интеграции с устройствами партнеров + DB")
+    System(microcontrollers, "Microcontrollers/Modules", "Устройства умного дома")
+}
+Container_Ext(paymentService, "Payment Service", "API (External)", "Обработка запросов для операций оплаты")
+Container_Ext(mediaStreamingServer, "Media Streaming Server", "Сервер потокового аудио и видео", "Сервер потокового видео")
+
+Rel(client, clientFrontend, "Управление и мониторинг\n умным домом", "HTTP")
+Rel(customerSupportTeam, supportFrontend, "Поддержка пользователей", "HTTP")
+Rel(clientFrontend, apiGateway, "client requests", "HTTP/gRPC/MQTT")
+Rel(supportFrontend, apiGateway, "support requests", "HTTP/gRPC/MQTT")
+Rel(apiGateway, deviceManagementService, "Управление устройствами", "HTTP")
+Rel(apiGateway, automation, "Управление и получение сценариев", "HTTP")
+Rel(automation, deviceManagementService, "Управление устройствами", "HTTP")
+Rel_R(apiGateway, marketplace, "Продажи в интернет-магазине", "HTTP")
+Rel_L(apiGateway, userManagement, "Управление и информация о пользователях" ,"HTTP")
+Rel(deviceManagementService, integrationHub, "Управление устройствами", "HTTP")
+Rel(integrationHub, microcontrollers, "Управление конечными устройствами", "MQTT/Zigbee")
+Rel(telemetry, integrationHub, "Получение телеметрии с устройств", "HTTP/gRPC/MQTT")
+Rel(deviceManagementService, telemetry, "Изменение состояний устройств телеметрии", "HTTP")
+Rel(apiGateway, telemetry, "Получение телеметрии с устройств", "HTTP/gRPC/MQTT")
+Rel_R(marketplace, paymentService, "Инициирует оплату через API", "HTTP")
+Rel(telemetry, prometheus, "Экспорт метрик", "HTTP")
+Rel(grafana, prometheus, "Запрос метрик для визуализации", "HTTP")
+Rel_R(integrationHub, mediaStreamingServer, "Потоковое аудио и видео", "RTSP/WebRTC")
+Rel(apiGateway, mediaStreamingServer, "Запрос видеопотока с камер", "HTTP/gRPC/MQTT")
+
+
+
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+!include <C4/C4_Component>
+
+Container_Boundary(dms, "Integration Hub Service") {
+    Component(integrationHubtApi, "Integration Hub API", "HTTP/gRPC/MQTT", "Обработка HTTP/gRPC/MQTT запросов для операций с устройствами")
+    Component(protocolAdapters, "Protocol Adapters", "Go", "Адаптеры для взаимодействия с устройствами (Zigbee/MQTT)")
+    Component(integrationHubtService, "Integration Hub Service", "Go Service", "Бизнес-логика: управление устройствами через адаптеры, обработка команд и телеметрии")
+    Component(integrationHubtDBService, "Integration Hub DB service", "SQL/Go", "Слой доступа к данным устройств")
+    ComponentDb(integrationHubtDb, "Integration Hub Database", "PostgreSQL", "Хранение оперативных данных c подключенных устройств")
+}
+System(microcontrollers, "Microcontrollers/Modules", "Устройства умного дома")
+Container_Ext(mediaStreamingServer, "Media Streaming Server", "RTSP/HTTP", "Сервер потокового аудио и видео")
+
+Rel(integrationHubtApi, integrationHubtService, "Вызов бизнес-логики", "Go func")
+Rel(integrationHubtService, integrationHubtDBService, "Чтение/запись данных", "Go func")
+Rel(integrationHubtService, protocolAdapters, "Взаимодействие с устройствами", "MQTT/Zigbee")
+Rel(integrationHubtDBService, integrationHubtDb, "SQL запросы", "SQL")
+Rel_R(protocolAdapters, microcontrollers, "Управление конечными устройствами", "MQTT/Zigbee")
+Rel(protocolAdapters, mediaStreamingServer, "Потоковое аудио и видео", "RTSP/WebRTC")
+
+
+@enduml
+

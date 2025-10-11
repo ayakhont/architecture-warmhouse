@@ -1,0 +1,18 @@
+@startuml
+!include <C4/C4_Component>
+
+Container_Boundary(marketplace, "Marketplace Service") {
+    Component(marketplaceApi, "Marketplace API", "REST API", "Обработка HTTP запросов для операций с магазином")
+    Component(marketplaceService, "Marketplace Service", "Go Service", "Бизнес-логика управления магазином")
+    Component(marketplaceDBService, "Marketplace DB service", "SQL/Go", "Слой доступа к данным магазина")
+    ComponentDb(marketplaceDb, "Marketplace Database", "PostgreSQL", "Хранение данных магазина")
+}
+Component_Ext(paymentService, "Payment Service", "API (External)", "Обработка запросов для операций оплаты")
+
+Rel(marketplaceApi, marketplaceService, "Вызов бизнес-логики", "Go func")
+Rel(marketplaceService, marketplaceDBService, "Чтение/запись данных", "Go func")
+Rel(marketplaceDBService, marketplaceDb, "SQL запросы", "SQL")
+Rel_R(marketplaceService, paymentService, "Инициирует оплату через API", "HTTP")
+
+@enduml
+

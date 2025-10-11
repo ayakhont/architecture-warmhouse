@@ -1,0 +1,14 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(client, "Client", "Пользователь системы")
+System_Boundary(platform, "Умный дом") {
+    System(temperatureSensors, "TemperatureSensors", "Датчики температуры")
+    System(temperatureService, "TemperatureService", "Сервис управления температурой")
+}
+
+Rel(client, temperatureService, "Включает/выключает отопление\nСмотрит температуру", "HTTP")
+Rel(temperatureService, temperatureSensors, "Управление и мониторинг\n датчиков температуры", "HTTP")
+
+@enduml

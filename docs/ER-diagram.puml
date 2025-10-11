@@ -1,0 +1,85 @@
+@startuml
+entity "User" as user {
+  *id : int
+  --
+  name : string
+  email : string
+}
+
+entity "House" as house {
+  *id : int
+  user_id : int
+  --
+  address : string
+}
+
+entity "Device" as device {
+  *id : int
+  type_id : int
+  module_id : int
+  --
+  name : string
+  serial_number: string
+  status: string
+}
+
+entity "DeviceType" as devicetype {
+  *id : int
+  --
+  type : string
+  description : string
+}
+
+entity "Module" as module {
+  *id : int
+  house_id : int
+  --
+  name : string
+  firmware_version: string
+}
+
+entity "Telemetry" as telemetry {
+  *id : int
+  module_id : int
+  --
+  metric: string
+  timestamp : datetime
+  value : float
+}
+
+entity "Payment" as payment {
+  *id : int
+  item_id : int
+  user_id : int
+  --
+  amount : float
+  status : string
+  created_at : datetime
+}
+
+entity "MarketplaceItem" as item {
+  *id : int
+  --
+  name : string
+  price : float
+  description : string
+}
+
+entity "AutomationScenario" as scenario {
+  *id : int
+  user_id : int
+  --
+  name : string
+  config : json
+}
+
+user ||--o{ house : owns
+house ||--o{ module : contains
+module ||--o{ telemetry : generates
+module ||--o{ device : contains
+devicetype ||--o{ device : classifies
+user ||--o{ payment : makes
+user ||--o{ scenario : configures
+item ||--o{ payment : purchased_by
+
+@enduml

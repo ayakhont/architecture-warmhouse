@@ -1,0 +1,25 @@
+@startuml
+!include <C4/C4_Component>
+
+Container_Boundary(telemetry, "Telemetry Service") {
+    Component(telemetryApi, "Telemetry API", "HTTP/gRPC/MQTT", "Обработка HTTP/gRPC/MQTT запросов получения телеметрии с устройств и их состояний")
+    Component(telemetryService, "Telemetry Service", "Go Service", "Бизнес-логика телеметрии и работы с событиями")
+    Component(openTelemetryService, "Open Telemetry Collector Service (opentelemetrySDK)", "Go Service", "Сбор, обработка и агрегация метрик используя OpenTelemetry SDK")
+    Component(telemetryDBService, "Telemetry DB service", "SQL/Go", "Слой доступа к данным телеметрии")
+    ComponentDb(telemetryDb, "Telemetry Database", "PostgreSQL", "Хранение данных телеметрии" )
+}
+Component(integrationHub, "Integration Hub Service", "Сервис интеграции с устройствами партнеров")
+Component(prometheus, "Prometheus", "Система мониторинга и оповещений", "Сбор и хранение метрик + Prometheus TSDB")
+Component(grafana, "Grafana", "Платформа аналитики и визуализации", "Визуализация метрик и создание дашбордов")
+
+Rel(telemetryApi, telemetryService, "Вызов бизнес-логики", "Go func")
+Rel(telemetryService, telemetryDBService, "Чтение/запись данных", "Go func")
+Rel(telemetryDBService, telemetryDb, "SQL запросы", "SQL")
+Rel(telemetryService, openTelemetryService, "Получение телеметрии с устройств", "HTTP")
+Rel_R(telemetryService, integrationHub, "Получение телеметрии с устройств", "HTTP")
+Rel_R(openTelemetryService, telemetryDBService, "Чтение/запись данных", "HTTP")
+Rel(openTelemetryService, prometheus, "Экспорт метрик", "HTTP")
+Rel(grafana, prometheus, "Запрос метрик для визуализации", "HTTP")
+
+@enduml
+
